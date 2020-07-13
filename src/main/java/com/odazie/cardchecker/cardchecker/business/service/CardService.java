@@ -55,6 +55,10 @@ public class CardService {
         return usersCards;
     }
 
+    public void addCard(Card card){
+        getCardRepository().save(card);
+    }
+
 
 
     public CardOwnerRepository getCardOwnerRepository() {
