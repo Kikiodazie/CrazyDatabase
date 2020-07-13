@@ -4,12 +4,13 @@ import com.odazie.cardchecker.cardchecker.business.domain.UserCard;
 import com.odazie.cardchecker.cardchecker.business.service.CardService;
 import com.odazie.cardchecker.cardchecker.data.entity.Card;
 import com.odazie.cardchecker.cardchecker.data.repository.CardRepository;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class cardController {
 
     private final CardService cardService;
@@ -21,32 +22,32 @@ public class cardController {
     }
 
     @GetMapping("/cards")
-    private List<UserCard> getCards(Model model){
+    public String getCards(Model model){
         List<UserCard> usersCards = getCardService().getAllCards();
 
-        model.addAttribute("cards", usersCards);
-
-        return usersCards;
-        // return this.cardRepository.findAll();
+        model.addAttribute("cards",usersCards);
+        return "userscards";
     }
 
-    //WAS FIGHTING A BUG HERE
-//    @PostMapping("/card")
-//    public Card  addCard(@RequestBody UserCard userCard){
-//
-//
-//        Card newCard = new Card();
-//
-//        newCard.setCvv(userCard.getCvv());
-//        newCard.setCardOwnerName(userCard.getCardOwnerName());
-//        newCard.setCardNumber(userCard.getCardNumber());
-//        newCard.setBankName(userCard.getBankName());
-//        newCard.setCardType(userCard.getCardType());
-//
-//        return  getCardRepository().save(newCard);
-//
-//    }
-//
+    /*
+WAS FIGHTING A BUG HERE
+    @PostMapping("/card")
+    public Card  addCard(@RequestBody UserCard userCard){
+
+
+        Card newCard = new Card();
+
+        newCard.setCvv(userCard.getCvv());
+        newCard.setCardOwnerName(userCard.getCardOwnerName());
+        newCard.setCardNumber(userCard.getCardNumber());
+        newCard.setBankName(userCard.getBankName());
+        newCard.setCardType(userCard.getCardType());
+
+        return  getCardRepository().save(newCard);
+
+    }
+
+*/
     @PostMapping("/card")
     public Long addCard(@RequestBody Card card ){
         getCardService().addCard(card);

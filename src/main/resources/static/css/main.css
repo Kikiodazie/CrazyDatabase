@@ -1,0 +1,12 @@
+h1,h2{
+    text-align: center;
+}
+
+body {
+    padding-top: 70px;
+    padding-bottom: 60px;
+}
+
+footer {
+    height: 50px;
+}
