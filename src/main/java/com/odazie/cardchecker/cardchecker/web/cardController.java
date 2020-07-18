@@ -57,7 +57,7 @@ WAS FIGHTING A BUG HERE
     @PostMapping("/card")
     public String addCard(@ModelAttribute Card card ){
         getCardService().addCard(card);
-        return "userscards";
+        return "success";
     }
 
     public CardRepository getCardRepository() {
