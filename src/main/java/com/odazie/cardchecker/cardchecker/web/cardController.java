@@ -48,10 +48,16 @@ WAS FIGHTING A BUG HERE
     }
 
 */
+    @GetMapping("/card")
+    public String cardForm(Model model){
+        model.addAttribute("card", new UserCard());
+        return "addCard";
+    }
+
     @PostMapping("/card")
-    public Long addCard(@RequestBody Card card ){
+    public String addCard(@ModelAttribute Card card ){
         getCardService().addCard(card);
-        return card.getCardId();
+        return "userscards";
     }
 
     public CardRepository getCardRepository() {
