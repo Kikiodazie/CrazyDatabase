@@ -33,19 +33,37 @@
 	
 	<h1>Fill this form</h1>
 	<form onsubmit="return mySubmitFunction(event)"name="form" style="text-align: center" th:action="@{/card}" th:object="${card}" method="post">
+		<div class="form-group">
+			<label>Card Number</label>
+			<input required = "required" type="text" name="cardNumber" th:maxlength="20" onblur="cardNumberValidation(document.form.cardNumber.value)" th:field="*{cardNumber}" placeholder="Fake Card Number" />
+			<a href="https://www.freeformatter.com/credit-card-number-generator-validator.html">Click here to get</a>
+		</div>
 		
-		<p>Card Number: <input required = "required" type="text" name="cardNumber" th:maxlength="20" onblur="cardNumberValidation(document.form.cardNumber.value)" th:field="*{cardNumber}" /></p>
-		<p>Name on Card: <input required = "required" type="text" th:field="*{cardOwnerName}" /></p>
-		<p>CVV: <input required = "required" type="text" th:field="*{cvv}" th:min="3" th:maxlength="3" /></p>
-		<p>Card Type: <select  th:field="*{cardType}">
-			<option th:value="'MASTERCARD'" th:text="MASTERCARD"></option>
-			<option th:value="'VISA'" th:text="VISA"></option>
-			<option th:value="'VERVE'" th:text="VERVE"></option>
-			<option th:value="'AMERICAN-EXPRESS'" th:text="AMERICAN-EXPRESS"></option>
-		</select>
-		</p>
-		<p>Bank name: <input required = "required" type="text" th:field="*{bankName}" /></p>
-		<p><input type="submit" value="Submit" /> <input type="reset" value="Reset"/></p>
+		<div class="form-group">
+			<label>Name on Card:</label>
+			<input required = "required" type="text" th:field="*{cardOwnerName}" placeholder="Fake Name" />
+		</div>
+		
+		<div class="form-group">
+			<label>Cvv</label>
+			<input required = "required" type="text" th:field="*{cvv}" th:min="3" th:maxlength="3" placeholder="Fake Security Code" style="width: 130px"/>
+			
+		</div>
+		
+		<div class="form-group">
+			<label>Card Type</label>
+			<select  th:field="*{cardType}">
+				<option th:value="'MASTERCARD'" th:text="MASTERCARD"></option>
+				<option th:value="'VISA'" th:text="VISA"></option>
+				<option th:value="'VERVE'" th:text="VERVE"></option>
+			</select>
+		</div>
+		
+		<div class="form-group">
+			<label>Bank</label>
+			<input required = "required" type="text" th:field="*{bankName}" placeholder="Fake Bank"/>
+		</div>
+		<p><input type="submit" class="btn btn-primary" value="Add Fake Card" /> <input class="btn btn-primary" type="reset" value="Reset Details"/></p>
 	</form>
 	
 </div>

@@ -40,6 +40,10 @@ public class cardController {
         getCardService().addCard(card);
         return "success";
     }
+    @GetMapping("/search")
+    public String searchCards(){
+        return "search";
+    }
 
 
     /*
