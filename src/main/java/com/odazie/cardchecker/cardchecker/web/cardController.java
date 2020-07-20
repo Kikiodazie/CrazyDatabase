@@ -29,6 +29,18 @@ public class cardController {
         model.addAttribute("cards",usersCards);
         return "userscards";
     }
+    @GetMapping("/card")
+    public String cardForm(Model model){
+        model.addAttribute("card", new UserCard());
+        return "addCard";
+    }
+
+    @PostMapping("/card")
+    public String addCard(@ModelAttribute Card card ){
+        getCardService().addCard(card);
+        return "success";
+    }
+
 
     /*
 WAS FIGHTING A BUG HERE
@@ -49,21 +61,6 @@ WAS FIGHTING A BUG HERE
     }
 
 */
-    @GetMapping("/card")
-    public String cardForm(Model model){
-        model.addAttribute("card", new UserCard());
-        return "addCard";
-    }
-
-    @PostMapping("/card")
-    public String addCard(@ModelAttribute Card card ){
-        getCardService().addCard(card);
-        return "success";
-    }
-
-    public CardRepository getCardRepository() {
-        return cardRepository;
-    }
 
     public CardService getCardService() {
         return cardService;
