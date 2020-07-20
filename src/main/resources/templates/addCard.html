@@ -34,7 +34,7 @@
 	<h1>Fill this form</h1>
 	<form onsubmit="return mySubmitFunction(event)"name="form" style="text-align: center" th:action="@{/card}" th:object="${card}" method="post">
 		
-		<p>Card Number: <input required = "required" type="text" name="cardNumber" th:maxlength="20" onblur="visaValidation(document.form.cardNumber)" th:field="*{cardNumber}" /></p>
+		<p>Card Number: <input required = "required" type="text" name="cardNumber" th:maxlength="20" onblur="cardNumberValidation(document.form.cardNumber.value)" th:field="*{cardNumber}" /></p>
 		<p>Name on Card: <input required = "required" type="text" th:field="*{cardOwnerName}" /></p>
 		<p>CVV: <input required = "required" type="text" th:field="*{cvv}" th:min="3" th:maxlength="3" /></p>
 		<p>Card Type: <select  th:field="*{cardType}">
@@ -57,21 +57,61 @@
 
 <script th:inline="javascript">
     let validationValue;
-    function visaValidation(cardNumber) {
+  
+	
+    // Sadly this luhn algorithm validates only visa cards
+	// const cardNumberValidation = num => {
+    //     let arr = (num + '')
+    //         .split('')
+    //         .reverse()
+    //         .map(x => parseInt(x));
+    //     let lastDigit = arr.splice(0, 1)[0];
+    //     let sum = arr.reduce((acc, val, i) => (i % 2 !== 0 ? acc + val : acc + ((val * 2) % 9) || 9), 0);
+    //     sum += lastDigit;
+    //
+    //     if (sum % 10 === 0){
+    //         validationValue = true;
+    //         return true;
+	// 	}else {
+    //         alert("Not a valid Visa credit card number!");
+    //         validationValue = false;
+    //         return false;
+	// 	}
+    // };
+	
+    
+    
+
+	
         
-        let visaValidation = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-        if (cardNumber.value.match(visaValidation)) {
-            // alert("Valid Visa credit card number!");
-			validationValue = true;
-            return true;
-            
+    //FINALLY
+    let luhnCheck = (function(arr) {
+        return function(ccNum) {
+            let
+                len = ccNum.length,
+                bit = 1,
+                sum = 0,
+                val;
+
+            while (len) {
+                val = parseInt(ccNum.charAt(--len), 10);
+                sum += (bit ^= 1) ? arr[val] : val;
+            }
+
+            return sum && sum % 10 === 0;
+        };
+    }([0, 2, 4, 6, 8, 1, 3, 5, 7, 9]));
+
+    function cardNumberValidation(cardNumber) {
+        if (luhnCheck(cardNumber) === true) {
+            validationValue = true;
         } else {
-            alert("Not a valid Visa credit card number!");
             validationValue = false;
-            return false;
+            alert("Not a valid credit/debit card number!");
         }
-        
     }
+	
+    
     
     
     function submitError() {
